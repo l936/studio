@@ -4,8 +4,8 @@ import type { Comment as CommentType } from '@/lib/types';
 import { generateComment } from '@/app/actions';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useToast } from '@/hooks/use-toast';
-import { useEffect, useRef, useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useEffect, useRef, useState, useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -85,7 +85,7 @@ function SubmitButton() {
 }
 
 function AddCommentForm({ onCommentAdded }: { onCommentAdded: (comment: CommentType) => void }) {
-  const [state, formAction] = useFormState(generateComment, addCommentInitialState);
+  const [state, formAction] = useActionState(generateComment, addCommentInitialState);
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
 

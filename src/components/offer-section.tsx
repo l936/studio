@@ -1,6 +1,7 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { personalizeOffer } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import {
@@ -35,7 +36,7 @@ function SubmitButton() {
 }
 
 export function OfferSection() {
-  const [state, formAction] = useFormState(personalizeOffer, initialState);
+  const [state, formAction] = useActionState(personalizeOffer, initialState);
   const [offerText, setOfferText] = useState('Get your free 100GB Data Plan for ALL networks!');
   const formRef = useRef<HTMLFormElement>(null);
 
