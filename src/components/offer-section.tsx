@@ -75,7 +75,7 @@ export function OfferSection() {
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <div className="space-y-4">
-                <div className='w-full aspect-video bg-black'>
+                <div className='w-full aspect-[9/16] bg-black'>
                   <iframe src="https://www.effectivegatecpm.com/tvh7hvci4?key=fe0fb694d10be2c533f8b1b751077009" className='w-full h-full' />
                 </div>
                 <Progress value={progressValue} />
