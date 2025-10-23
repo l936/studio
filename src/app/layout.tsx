@@ -21,6 +21,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap"
           rel="stylesheet"
         />
+        <script type='text/javascript' src='//pl27913869.effectivegatecpm.com/2e/6d/1f/2e6d1f6505e0e8a2e0b933d1b2be7d9b.js'></script>
       </head>
       <body className="font-body antialiased">
         {children}
