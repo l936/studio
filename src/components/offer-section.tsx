@@ -62,7 +62,7 @@ export function OfferSection() {
       >
         এখানে ক্লিক করুন &rarr;
       </Button>
-      <p className="text-sm text-muted-foreground">Limited time offer - Claim your free data now!</p>
+      <p className="text-sm text-muted-foreground">Must watch 10 ads.</p>
 
       <AlertDialog open={step !== 'initial'} onOpenChange={(open) => !open && closeDialog()}>
         <AlertDialogContent>
