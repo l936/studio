@@ -3,9 +3,14 @@
 import type { Comment as CommentType } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { useState } from 'react';
+import { useState, useActionState, useRef, useEffect } from 'react';
 import { ThumbsUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { generateComment } from '@/app/actions';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
+import { Button } from './ui/button';
+import { useFormStatus } from 'react-dom';
 
 const initialComments: CommentType[] = [
   {
@@ -77,32 +82,65 @@ function CommentCard({ comment }: { comment: CommentType }) {
         <div className="bg-secondary rounded-lg p-3">
           <p className="font-semibold text-card-foreground">{comment.name} <span className="text-xs text-muted-foreground font-normal">{comment.time}</span></p>
           <p className="text-sm text-muted-foreground">{comment.comment}</p>
-          {likeCount > 0 && (
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-2">
-                <ThumbsUp className="w-3.5 h-3.5 text-primary" />
-                <span>{likeCount}</span>
-              </div>
-            )}
         </div>
-        <div className="flex items-center space-x-4 text-xs text-muted-foreground mt-1 pl-3">
-        <button onClick={handleLike} className={cn('hover:underline flex items-center gap-1', liked && 'text-primary font-bold')}>
-            <ThumbsUp className='w-3 h-3' />
+        <div className="flex items-center space-x-2 text-xs text-muted-foreground mt-1 pl-3">
+          <button onClick={handleLike} className={cn('hover:underline', liked && 'text-primary font-bold')}>
             Like
           </button>
           <span>&middot;</span>
           <button className="hover:underline">Reply</button>
+          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <ThumbsUp className="w-3 h-3 text-primary" />
+              <span>{likeCount}</span>
+            </div>
         </div>
       </div>
     </div>
   );
 }
 
+const initialState = {
+  newComment: null,
+  error: null,
+};
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <Button type="submit" disabled={pending}>
+      {pending ? 'Posting...' : 'Post Comment'}
+    </Button>
+  );
+}
+
 export function CommentsSection() {
   const [comments, setComments] = useState<CommentType[]>(initialComments);
+  const [state, formAction] = useActionState(generateComment, initialState);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (state.newComment) {
+      setComments((prevComments) => [state.newComment, ...prevComments]);
+      formRef.current?.reset();
+    }
+  }, [state.newComment]);
 
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-center">What people are saying</h2>
+
+      <div className="bg-card border rounded-lg p-4">
+        <h3 className="font-semibold mb-2">Add a comment</h3>
+        <form action={formAction} ref={formRef} className="space-y-4" id="comment-form">
+          <Input name="name" id="name" placeholder="Your name" required />
+          {state.error?.name && <p className="text-red-500 text-sm">{state.error.name[0]}</p>}
+          <Textarea name="comment" placeholder="Write your comment..." required />
+          {state.error?.comment && <p className="text-red-500 text-sm">{state.error.comment[0]}</p>}
+          <SubmitButton />
+          {state.error?.form && <p className="text-red-500 text-sm">{state.error.form[0]}</p>}
+        </form>
+      </div>
+
       <div className="space-y-6">
         {comments.map((comment) => (
           <CommentCard key={comment.id} comment={comment} />
