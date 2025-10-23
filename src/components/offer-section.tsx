@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { personalizeOffer } from '@/app/actions';
 import { Button } from '@/components/ui/button';
@@ -14,7 +14,6 @@ import {
 } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { useEffect, useRef, useState } from 'react';
 import { Alert, AlertDescription } from './ui/alert';
 import { Sparkles, Terminal } from 'lucide-react';
 import Image from 'next/image';
@@ -61,9 +60,8 @@ export function OfferSection() {
         <CardContent>
           <div className="relative w-full aspect-video mb-4">
             <Image
-              src={offerImage.imageUrl}
-              alt={offerImage.description}
-              data-ai-hint={offerImage.imageHint}
+              src="https://storage.googleapis.com/stabl-agent-assets/initial-assets/free-internet.png"
+              alt="Free internet offer"
               fill
               className="object-contain"
             />
