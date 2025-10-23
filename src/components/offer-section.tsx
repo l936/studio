@@ -55,13 +55,13 @@ export function OfferSection() {
     <section className="space-y-6">
       <Card className="shadow-xl overflow-hidden">
         {offerImage && (
-          <div className="relative w-full aspect-[16/9]">
+          <div className="relative w-full aspect-video">
             <Image
               src={offerImage.imageUrl}
               alt={offerImage.description}
               data-ai-hint={offerImage.imageHint}
               fill
-              className="object-cover"
+              className="object-contain"
             />
           </div>
         )}
