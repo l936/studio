@@ -5,7 +5,7 @@ export function PageHeader() {
   const headerImage = PlaceHolderImages.find((p) => p.id === 'hero-banner');
   return (
     <div className="bg-primary text-primary-foreground text-center p-3 space-y-2">
-      <h1 className="text-2xl font-bold">ফ্রি 100GB Internet! সমস্ত নেটওয়ার্কে এখনই উপভোগ করুন!</h1>
+      <h1 className="text-2xl font-bold">ফ্রি 25GB Internet! সমস্ত নেটওয়ার্কে এখনই উপভোগ করুন।</h1>
       {headerImage && (
         <Image
           src={headerImage.imageUrl}
