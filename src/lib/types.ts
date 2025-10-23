@@ -5,4 +5,5 @@ export type Comment = {
   time: string;
   profilePictureUrl: string;
   imageHint?: string;
+  likes: number;
 };

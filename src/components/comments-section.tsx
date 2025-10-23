@@ -4,6 +4,8 @@ import type { Comment as CommentType } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { useState } from 'react';
+import { ThumbsUp } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const initialComments: CommentType[] = [
   {
@@ -13,6 +15,7 @@ const initialComments: CommentType[] = [
     time: '31m ago',
     profilePictureUrl: PlaceHolderImages.find((p) => p.id === 'pfp-hasan')!.imageUrl,
     imageHint: PlaceHolderImages.find((p) => p.id === 'pfp-hasan')!.imageHint,
+    likes: 152,
   },
   {
     id: '2',
@@ -21,6 +24,7 @@ const initialComments: CommentType[] = [
     time: '2h ago',
     profilePictureUrl: PlaceHolderImages.find((p) => p.id === 'pfp-aminul')!.imageUrl,
     imageHint: PlaceHolderImages.find((p) => p.id === 'pfp-aminul')!.imageHint,
+    likes: 88,
   },
   {
     id: '3',
@@ -29,6 +33,7 @@ const initialComments: CommentType[] = [
     time: '1d ago',
     profilePictureUrl: PlaceHolderImages.find((p) => p.id === 'pfp-farzana')!.imageUrl,
     imageHint: PlaceHolderImages.find((p) => p.id === 'pfp-farzana')!.imageHint,
+    likes: 12,
   },
   {
     id: '4',
@@ -37,10 +42,23 @@ const initialComments: CommentType[] = [
     time: '5m',
     profilePictureUrl: PlaceHolderImages.find((p) => p.id === 'pfp-nafisa')!.imageUrl,
     imageHint: PlaceHolderImages.find((p) => p.id === 'pfp-nafisa')!.imageHint,
+    likes: 210,
   },
 ];
 
 function CommentCard({ comment }: { comment: CommentType }) {
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(comment.likes);
+
+  const handleLike = () => {
+    if (liked) {
+      setLikeCount(likeCount - 1);
+    } else {
+      setLikeCount(likeCount + 1);
+    }
+    setLiked(!liked);
+  };
+  
   const getInitials = (name: string) => {
     return name
       .split(' ')
@@ -59,9 +77,18 @@ function CommentCard({ comment }: { comment: CommentType }) {
         <div className="bg-secondary rounded-lg p-3">
           <p className="font-semibold text-card-foreground">{comment.name} <span className="text-xs text-muted-foreground font-normal">{comment.time}</span></p>
           <p className="text-sm text-muted-foreground">{comment.comment}</p>
+          {likeCount > 0 && (
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-2">
+                <ThumbsUp className="w-3.5 h-3.5 text-primary" />
+                <span>{likeCount}</span>
+              </div>
+            )}
         </div>
         <div className="flex items-center space-x-4 text-xs text-muted-foreground mt-1 pl-3">
-          <button className="hover:underline">Like</button>
+        <button onClick={handleLike} className={cn('hover:underline flex items-center gap-1', liked && 'text-primary font-bold')}>
+            <ThumbsUp className='w-3 h-3' />
+            Like
+          </button>
           <span>&middot;</span>
           <button className="hover:underline">Reply</button>
         </div>
