@@ -7,36 +7,6 @@
       "imageHint": "people technology"
     },
     {
-      "id": "logo-grameenphone",
-      "description": "Grameenphone logo",
-      "imageUrl": "https://images.unsplash.com/photo-1760037028553-3c5c801f18c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bG9nbyUyMGFic3RyYWN0fGVufDB8fHx8MTc2MTE5NzM0OXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "logo abstract"
-    },
-    {
-      "id": "logo-banglalink",
-      "description": "Banglalink logo",
-      "imageUrl": "https://images.unsplash.com/photo-1754751239256-98037d9dca34?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxsb2dvJTIwYWJzdHJhY3R8ZW58MHx8fHwxNzYxMTk3MzQ5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "logo abstract"
-    },
-    {
-      "id": "logo-airtel",
-      "description": "Airtel logo",
-      "imageUrl": "https://images.unsplash.com/photo-1755586258247-67f5148d76c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxsb2dvJTIwYWJzdHJhY3R8ZW58MHx8fHwxNzYxMTk3MzQ5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "logo abstract"
-    },
-    {
-      "id": "logo-robi",
-      "description": "Robi logo",
-      "imageUrl": "https://images.unsplash.com/photo-1755586258247-67f5148d76c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxsb2dvJTIwYWJzdHJhY3R8ZW58MHx8fHwxNzYxMTk3MzQ5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "logo abstract"
-    },
-    {
-      "id": "logo-teletalk",
-      "description": "Teletalk logo",
-      "imageUrl": "https://images.unsplash.com/photo-1754837369018-ff35655d126f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxsb2dvJTIwYWJzdHJhY3R8ZW58MHx8fHwxNzYxMTk3MzQ5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "logo abstract"
-    },
-    {
       "id": "pfp-hasan",
       "description": "Profile picture for Hasan Mahmud",
       "imageUrl": "https://images.unsplash.com/photo-1607031542107-f6f46b5d54e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjExNDUzMDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
@@ -59,12 +29,6 @@
       "description": "Profile picture for Nafisa Begum",
       "imageUrl": "https://images.unsplash.com/photo-1614283233556-f35b0c801ef1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MTE0NzUzOXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "woman portrait"
-    },
-    {
-      "id": "free-internet-offer",
-      "description": "Free Internet 2025 All sim Offer 2025",
-      "imageUrl": "https://i.ibb.co/9H1Pnmm/file-000000002be861fa816deb850c15af40-1.png",
-      "imageHint": "internet offer"
     }
   ]
 }

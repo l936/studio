@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'DataWave 2025',
-  description: 'Free Internet Offers for 2025',
+  title: 'Free 100GB Internet Offer',
+  description: 'Free 100GB Internet for all networks',
 };
 
 export default function RootLayout({

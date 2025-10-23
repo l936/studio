@@ -1,105 +1,23 @@
 'use client';
 
-import { useActionState, useEffect, useRef, useState } from 'react';
-import { useFormStatus } from 'react-dom';
-import { personalizeOffer } from '@/app/actions';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from './ui/alert';
-import { Sparkles, Terminal } from 'lucide-react';
-import Image from 'next/image';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
-
-const initialState = {
-  personalizedOffer: null,
-  error: null,
-};
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button type="submit" disabled={pending}>
-      {pending ? 'Personalizing...' : 'Personalize Offer'}
-      <Sparkles className="ml-2 h-4 w-4" />
-    </Button>
-  );
-}
+import { Card, CardContent } from '@/components/ui/card';
+import { Sparkles } from 'lucide-react';
 
 export function OfferSection() {
-  const [state, formAction] = useActionState(personalizeOffer, initialState);
-  const [offerText, setOfferText] = useState('Get your free 100GB Data Plan for ALL networks!');
-  const formRef = useRef<HTMLFormElement>(null);
-
-  useEffect(() => {
-    if (state.personalizedOffer) {
-      setOfferText(state.personalizedOffer);
-    }
-    if (!state.error && state.personalizedOffer) {
-      formRef.current?.reset();
-    }
-  }, [state]);
-
-  const offerImage = PlaceHolderImages.find((p) => p.id === 'free-internet-offer')!;
-
   return (
-    <section className="space-y-6">
-      <Card className="text-center shadow-xl overflow-hidden">
-        <CardHeader>
-          <CardTitle className="text-2xl font-headline">{offerText}</CardTitle>
-          <CardDescription>Claim your free 100GB data plan for any network!</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="relative w-full aspect-video mb-4">
-            <Image
-              src="https://storage.googleapis.com/stabl-agent-assets/initial-assets/free-internet.png"
-              alt="Free internet offer"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <a href="#">
-            <Button
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-8 py-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform"
-            >
-              CLICK HERE
-            </Button>
-          </a>
-        </CardContent>
-        <CardFooter className="flex-col gap-4 bg-secondary/50 p-6">
-          <div className="text-sm text-foreground">Or, let AI personalize the offer for you!</div>
-          <form action={formAction} ref={formRef} className="w-full max-w-md space-y-4">
-            <div>
-              <Label htmlFor="interests" className="sr-only">
-                Your Interests
-              </Label>
-              <Textarea
-                id="interests"
-                name="interests"
-                placeholder="Tell us what you love to do online, e.g., 'I love streaming movies and playing online games with friends...'"
-                className="bg-background"
-                required
-              />
-            </div>
-            {state.error && (
-              <Alert variant="destructive">
-                <Terminal className="h-4 w-4" />
-                <AlertDescription>{state.error}</AlertDescription>
-              </Alert>
-            )}
-            <SubmitButton />
-          </form>
-        </CardFooter>
-      </Card>
+    <section className="space-y-4 text-center">
+      <div className="flex justify-center items-center gap-2">
+        <Sparkles className="text-accent" />
+        <h2 className="text-xl font-bold text-foreground">
+          সমস্ত নেটওয়ার্কের জন্য বিনামূল্যে 100GB ডেটা প্ল্যান!
+        </h2>
+        <Sparkles className="text-accent" />
+      </div>
+      <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold px-8 py-6 rounded-lg shadow-lg">
+        এখানে ক্লিক করুন &rarr;
+      </Button>
+      <p className="text-sm text-muted-foreground">Limited time offer - Claim your free data now!</p>
     </section>
   );
 }
