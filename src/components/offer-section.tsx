@@ -10,7 +10,7 @@ export function OfferSection() {
       <div className="flex justify-center items-center gap-2">
         <Sparkles className="text-accent" />
         <h2 className="text-xl font-bold text-foreground">
-          সমস্ত নেটওয়ার্কের জন্য বিনামূল্যে 100GB ডেটা প্ল্যান!
+          25 GB
         </h2>
         <Sparkles className="text-accent" />
       </div>
