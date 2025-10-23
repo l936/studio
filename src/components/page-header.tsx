@@ -1,15 +1,21 @@
 import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export function PageHeader() {
+  const headerImage = PlaceHolderImages.find((p) => p.id === 'hero-banner');
   return (
-    <div className="bg-primary text-primary-foreground text-center p-3">
-      <Image
-        src="https://i.ibb.co/9H1Pnmmx/file-000000002be861fa816deb850c15af40-1.png"
-        alt="Free internet offer"
-        width={750}
-        height={400}
-        className="object-contain w-full"
-      />
+    <div className="bg-primary text-primary-foreground text-center p-3 space-y-2">
+      <h1 className="text-2xl font-bold">ফ্রি 100GB Internet! সমস্ত নেটওয়ার্কে এখনই উপভোগ করুন!</h1>
+      {headerImage && (
+        <Image
+          src={headerImage.imageUrl}
+          alt={headerImage.description}
+          data-ai-hint={headerImage.imageHint}
+          width={750}
+          height={400}
+          className="object-contain w-full"
+        />
+      )}
     </div>
   );
 }

@@ -123,7 +123,7 @@ export function CommentsSection() {
       setComments((prevComments) => [state.newComment!, ...prevComments]);
       formRef.current?.reset();
     }
-  }, [state]);
+  }, [state.newComment]);
 
   return (
     <div className="space-y-6">
