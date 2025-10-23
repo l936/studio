@@ -1,9 +1,15 @@
-import { Sparkles } from 'lucide-react';
+import Image from 'next/image';
 
 export function PageHeader() {
   return (
     <div className="bg-primary text-primary-foreground text-center p-3">
-      <h1 className="text-lg font-bold">ফ্রি 100GB Internet! সমস্ত নেটওয়ার্কে এখনই উপভোগ করুন!</h1>
+      <Image
+        src="https://i.ibb.co/9H1Pnmm/file-000000002be861fa816deb850c15af40-1.png"
+        alt="Free internet offer"
+        width={750}
+        height={400}
+        className="object-contain w-full"
+      />
     </div>
   );
 }
