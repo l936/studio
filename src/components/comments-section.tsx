@@ -120,10 +120,10 @@ export function CommentsSection() {
 
   useEffect(() => {
     if (state.newComment) {
-      setComments((prevComments) => [state.newComment, ...prevComments]);
+      setComments((prevComments) => [state.newComment!, ...prevComments]);
       formRef.current?.reset();
     }
-  }, [state.newComment]);
+  }, [state]);
 
   return (
     <div className="space-y-6">
