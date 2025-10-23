@@ -59,6 +59,15 @@ export function OfferSection() {
           <CardDescription>Claim your free 100GB data plan for any network!</CardDescription>
         </CardHeader>
         <CardContent>
+          <div className="relative w-full aspect-video mb-4">
+            <Image
+              src={offerImage.imageUrl}
+              alt={offerImage.description}
+              data-ai-hint={offerImage.imageHint}
+              fill
+              className="object-contain"
+            />
+          </div>
           <a href="#">
             <Button
               size="lg"
