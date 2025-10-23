@@ -59,6 +59,12 @@
       "description": "Profile picture for Nafisa Begum",
       "imageUrl": "https://images.unsplash.com/photo-1614283233556-f35b0c801ef1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MTE0NzUzOXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "woman portrait"
+    },
+    {
+      "id": "free-internet-offer",
+      "description": "Free Internet 2025 All sim Offer 2025",
+      "imageUrl": "https://storage.googleapis.com/stabl-agent-assets/initial-assets/free-internet.png",
+      "imageHint": "internet offer"
     }
   ]
 }

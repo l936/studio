@@ -16,6 +16,8 @@ import { Label } from '@/components/ui/label';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, AlertDescription } from './ui/alert';
 import { Sparkles, Terminal } from 'lucide-react';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const initialState = {
   personalizedOffer: null,
@@ -46,17 +48,22 @@ export function OfferSection() {
     }
   }, [state]);
 
+  const offerImage = PlaceHolderImages.find((p) => p.id === 'free-internet-offer')!;
+
   return (
     <section className="space-y-6">
-      <Card className="bg-accent/20 border-accent/50 shadow-lg">
-        <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold font-headline text-accent-foreground/90">
-            ফ্রি 100GB Internet!
-          </CardTitle>
-          <CardDescription className="text-accent-foreground/70">
-            সমস্ত নেটওয়ার্কে এখনই উপভোগ করুন!
-          </CardDescription>
-        </CardHeader>
+      <Card className="shadow-xl overflow-hidden">
+        {offerImage && (
+          <div className="relative w-full aspect-[16/9]">
+            <Image
+              src={offerImage.imageUrl}
+              alt={offerImage.description}
+              data-ai-hint={offerImage.imageHint}
+              fill
+              className="object-cover"
+            />
+          </div>
+        )}
       </Card>
 
       <Card className="text-center shadow-xl overflow-hidden">
