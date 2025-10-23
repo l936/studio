@@ -22,6 +22,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
         <script type='text/javascript' src='//pl27913869.effectivegatecpm.com/2e/6d/1f/2e6d1f6505e0e8a2e0b933d1b2be7d9b.js'></script>
+        <script type='text/javascript' src='//pl27913892.effectivegatecpm.com/48/b9/69/48b9693353acc2d3e518bf4868749521.js'></script>
       </head>
       <body className="font-body antialiased">
         {children}

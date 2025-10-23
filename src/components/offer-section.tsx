@@ -9,27 +9,40 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogDescription,
+  AlertDialogFooter,
 } from '@/components/ui/alert-dialog';
 import { Progress } from '@/components/ui/progress';
+import { Input } from './ui/input';
+
+type Step = 'initial' | 'ad' | 'form' | 'submitted';
 
 export function OfferSection() {
-  const [showAd, setShowAd] = useState(false);
+  const [step, setStep] = useState<Step>('initial');
   const [countdown, setCountdown] = useState(30);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    if (showAd && countdown > 0) {
+    if (step === 'ad' && countdown > 0) {
       timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-    } else if (showAd && countdown === 0) {
-      setShowAd(false);
+    } else if (step === 'ad' && countdown === 0) {
+      setStep('form');
     }
     return () => clearTimeout(timer);
-  }, [showAd, countdown]);
+  }, [step, countdown]);
 
   const handleButtonClick = () => {
     setCountdown(30);
-    setShowAd(true);
+    setStep('ad');
   };
+  
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setStep('submitted');
+  };
+  
+  const closeDialog = () => {
+    setStep('initial');
+  }
 
   const progressValue = ((30 - countdown) / 30) * 100;
 
@@ -51,20 +64,53 @@ export function OfferSection() {
       </Button>
       <p className="text-sm text-muted-foreground">Limited time offer - Claim your free data now!</p>
 
-      <AlertDialog open={showAd} onOpenChange={setShowAd}>
+      <AlertDialog open={step !== 'initial'} onOpenChange={(open) => !open && closeDialog()}>
         <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Advertisement</AlertDialogTitle>
-            <AlertDialogDescription>
-              Please wait for the ad to finish. Closing this will not grant the offer.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <div className="space-y-4">
-            <Progress value={progressValue} />
-            <p className="text-center font-mono text-lg">
-              Ad will close in {countdown} second{countdown !== 1 ? 's' : ''}
-            </p>
-          </div>
+          {step === 'ad' && (
+            <>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Advertisement</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Please wait for the ad to finish. Closing this will not grant the offer.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <div className="space-y-4">
+                <Progress value={progressValue} />
+                <p className="text-center font-mono text-lg">
+                  Ad will close in {countdown} second{countdown !== 1 ? 's' : ''}
+                </p>
+              </div>
+            </>
+          )}
+          {step === 'form' && (
+            <>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Claim Your Offer</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Enter your phone number to receive the free data.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <form onSubmit={handleFormSubmit} className="space-y-4">
+                <Input type="tel" placeholder="Enter your phone number" required />
+                <AlertDialogFooter>
+                  <Button type="submit">Send</Button>
+                </AlertDialogFooter>
+              </form>
+            </>
+          )}
+          {step === 'submitted' && (
+             <>
+             <AlertDialogHeader>
+               <AlertDialogTitle>Offer Claimed!</AlertDialogTitle>
+               <AlertDialogDescription>
+                 Your request has been submitted. You will receive your data within 24 hours.
+               </AlertDialogDescription>
+             </AlertDialogHeader>
+             <AlertDialogFooter>
+                <Button onClick={closeDialog}>Close</Button>
+             </AlertDialogFooter>
+           </>
+          )}
         </AlertDialogContent>
       </AlertDialog>
     </section>
