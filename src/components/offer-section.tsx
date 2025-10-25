@@ -35,10 +35,9 @@ type Step = 'initial' | 'ad' | 'share' | 'form' | 'submitted';
 export function OfferSection() {
   const [step, setStep] = useState<Step>('initial');
   const [countdown, setCountdown] = useState(30);
-  const [shares, setShares] = useState({ messenger: false, whatsapp: false });
+  const [shares, setShares] = useState(0);
 
-  const totalShares = Object.values(shares).filter(Boolean).length;
-  const allShared = totalShares === 2;
+  const allShared = shares >= 15;
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -61,19 +60,14 @@ export function OfferSection() {
     setStep('ad');
   };
 
-  const handleShareClick = (platform: 'messenger' | 'whatsapp') => {
+  const handleShareClick = () => {
     const urlToShare = encodeURIComponent(window.location.href);
-    let webUrl: string;
-
-    if (platform === 'messenger') {
-      webUrl = `fb-messenger://share?link=${urlToShare}`;
-      setShares(s => ({ ...s, messenger: true }));
-    } else {
-      webUrl = `https://wa.me/?text=${urlToShare}`;
-      setShares(s => ({ ...s, whatsapp: true }));
-    }
+    const webUrl = `fb-messenger://share?link=${urlToShare}&app_id=123456789`;
     
     window.open(webUrl, '_blank', 'width=600,height=400');
+    if (shares < 15) {
+      setShares(s => s + 1);
+    }
   };
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -83,7 +77,7 @@ export function OfferSection() {
 
   const closeDialog = () => {
     setStep('initial');
-    setShares({ messenger: false, whatsapp: false });
+    setShares(0);
   };
 
   const progressValue = ((30 - countdown) / 30) * 100;
@@ -132,17 +126,14 @@ export function OfferSection() {
               <AlertDialogHeader>
                 <AlertDialogTitle>Share to Unlock</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Share this offer to unlock the next step.
+                  Share this offer with 15 friends on Messenger to unlock the next step.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <div className="space-y-4 py-4">
-                <Button onClick={() => handleShareClick('messenger')} className="w-full" size="lg" disabled={shares.messenger}>
+                <Button onClick={handleShareClick} className="w-full" size="lg" disabled={allShared}>
                   <MessageSquare className="mr-2" /> Share on Messenger
                 </Button>
-                 <Button onClick={() => handleShareClick('whatsapp')} className="w-full bg-green-500 hover:bg-green-600" size="lg" disabled={shares.whatsapp}>
-                  <WhatsAppIcon /> Share on WhatsApp
-                </Button>
-                <p className="text-center text-sm text-muted-foreground">{totalShares} of 2 shares completed</p>
+                <p className="text-center text-sm text-muted-foreground">{shares} of 15 shares completed</p>
               </div>
               <AlertDialogFooter>
                 <Button variant="outline" onClick={closeDialog}>Close</Button>
