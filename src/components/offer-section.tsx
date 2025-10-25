@@ -17,12 +17,9 @@ import { MessageSquare } from 'lucide-react';
 
 type Step = 'initial' | 'ad' | 'share' | 'form' | 'submitted';
 
-const REQUIRED_SHARES = 15;
-
 export function OfferSection() {
   const [step, setStep] = useState<Step>('initial');
   const [countdown, setCountdown] = useState(30);
-  const [shareCount, setShareCount] = useState(0);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -33,16 +30,9 @@ export function OfferSection() {
     }
     return () => clearTimeout(timer);
   }, [step, countdown]);
-  
-  useEffect(() => {
-    if (step === 'share' && shareCount >= REQUIRED_SHARES) {
-      setStep('form');
-    }
-  }, [shareCount, step]);
 
   const handleButtonClick = () => {
     setCountdown(30);
-    setShareCount(0);
     setStep('ad');
   };
 
@@ -50,7 +40,7 @@ export function OfferSection() {
     const urlToShare = encodeURIComponent(window.location.href);
     const webUrl = `https://www.facebook.com/dialog/share?app_id=145634995501895&display=popup&href=${urlToShare}&redirect_uri=${encodeURIComponent(window.location.href)}`;
     window.open(webUrl, '_blank', 'width=600,height=400');
-    setShareCount((prev) => prev + 1);
+    setStep('form');
   };
   
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -63,8 +53,6 @@ export function OfferSection() {
   }
 
   const progressValue = ((30 - countdown) / 30) * 100;
-  const shareProgress = (shareCount / REQUIRED_SHARES) * 100;
-
 
   return (
     <section className="space-y-4 text-center">
@@ -110,19 +98,13 @@ export function OfferSection() {
               <AlertDialogHeader>
                 <AlertDialogTitle>Share to Unlock</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Share this offer with 15 friends on Messenger to unlock the next step.
+                  Share this offer with your friends on Messenger to unlock the next step.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <div className="space-y-4 py-4">
                 <Button onClick={handleShareClick} className="w-full" size="lg">
                   <MessageSquare className="mr-2" /> Share on Messenger
                 </Button>
-                <div className="space-y-2">
-                  <Progress value={shareProgress} />
-                  <p className="text-center text-sm text-muted-foreground">
-                    {shareCount} of {REQUIRED_SHARES} shares completed
-                  </p>
-                </div>
               </div>
               <AlertDialogFooter>
                 <Button variant="outline" onClick={closeDialog}>Close</Button>
