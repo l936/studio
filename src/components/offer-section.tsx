@@ -48,12 +48,8 @@ export function OfferSection() {
 
   const handleShareClick = () => {
     const urlToShare = encodeURIComponent(window.location.href);
-    const textToShare = encodeURIComponent("Check out this amazing offer for free internet!");
-    
-    const webUrl = `https://www.facebook.com/dialog/send?app_id=YOUR_APP_ID&link=${urlToShare}&redirect_uri=${window.location.href}`;
-
-    window.open(webUrl, '_blank');
-
+    const webUrl = `https://www.facebook.com/dialog/share?app_id=145634995501895&display=popup&href=${urlToShare}&redirect_uri=${encodeURIComponent(window.location.href)}`;
+    window.open(webUrl, '_blank', 'width=600,height=400');
     setShareCount((prev) => prev + 1);
   };
   
