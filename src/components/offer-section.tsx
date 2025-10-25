@@ -50,19 +50,9 @@ export function OfferSection() {
     const urlToShare = encodeURIComponent(window.location.href);
     const textToShare = encodeURIComponent("Check out this amazing offer for free internet!");
     
-    // Try to open Messenger app directly
-    const messengerAppUrl = `fb-messenger://share?link=${urlToShare}&app_id=123456789`;
-    
-    // Fallback to web URL
-    const webUrl = `https://www.facebook.com/dialog/share?app_id=123456789&href=${urlToShare}&quote=${textToShare}&display=popup&redirect_uri=${urlToShare}`;
+    const webUrl = `https://www.facebook.com/dialog/send?app_id=YOUR_APP_ID&link=${urlToShare}&redirect_uri=${window.location.href}`;
 
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    
-    if (isMobile) {
-        window.location.href = messengerAppUrl;
-    } else {
-        window.open(webUrl, '_blank');
-    }
+    window.open(webUrl, '_blank');
 
     setShareCount((prev) => prev + 1);
   };
@@ -109,7 +99,7 @@ export function OfferSection() {
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <div className="space-y-4">
-                <div className='w-full aspect-video bg-black'>
+                <div className='w-full aspect-[9/16] bg-black'>
                   <iframe src="https://www.effectivegatecpm.com/tvh7hvci4?key=fe0fb694d10be2c533f8b1b751077009" className='w-full h-full' />
                 </div>
                 <Progress value={progressValue} />
