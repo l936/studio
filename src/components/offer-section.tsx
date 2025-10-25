@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, MessageSquare, Share2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import {
   AlertDialog,
@@ -13,13 +13,32 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Progress } from '@/components/ui/progress';
 import { Input } from './ui/input';
-import { MessageSquare } from 'lucide-react';
+
+const WhatsAppIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+  </svg>
+);
 
 type Step = 'initial' | 'ad' | 'share' | 'form' | 'submitted';
 
 export function OfferSection() {
   const [step, setStep] = useState<Step>('initial');
   const [countdown, setCountdown] = useState(30);
+  const [shares, setShares] = useState({ messenger: false, whatsapp: false });
+
+  const totalShares = Object.values(shares).filter(Boolean).length;
+  const allShared = totalShares === 2;
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -30,27 +49,42 @@ export function OfferSection() {
     }
     return () => clearTimeout(timer);
   }, [step, countdown]);
+  
+  useEffect(() => {
+    if(allShared) {
+      setTimeout(() => setStep('form'), 500);
+    }
+  }, [allShared]);
 
   const handleButtonClick = () => {
     setCountdown(30);
     setStep('ad');
   };
 
-  const handleShareClick = () => {
+  const handleShareClick = (platform: 'messenger' | 'whatsapp') => {
     const urlToShare = encodeURIComponent(window.location.href);
-    const webUrl = `https://www.facebook.com/dialog/share?app_id=145634995501895&display=popup&href=${urlToShare}&redirect_uri=${encodeURIComponent(window.location.href)}`;
+    let webUrl: string;
+
+    if (platform === 'messenger') {
+      webUrl = `fb-messenger://share?link=${urlToShare}`;
+      setShares(s => ({ ...s, messenger: true }));
+    } else {
+      webUrl = `https://wa.me/?text=${urlToShare}`;
+      setShares(s => ({ ...s, whatsapp: true }));
+    }
+    
     window.open(webUrl, '_blank', 'width=600,height=400');
-    setStep('form');
   };
-  
+
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setStep('submitted');
   };
-  
+
   const closeDialog = () => {
     setStep('initial');
-  }
+    setShares({ messenger: false, whatsapp: false });
+  };
 
   const progressValue = ((30 - countdown) / 30) * 100;
 
@@ -83,8 +117,8 @@ export function OfferSection() {
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <div className="space-y-4">
-                <div className='w-full aspect-[9/16] bg-black'>
-                  <iframe src="https://www.effectivegatecpm.com/tvh7hvci4?key=fe0fb694d10be2c533f8b1b751077009" className='w-full h-full' />
+                <div className="w-full aspect-[9/16] bg-black">
+                  <iframe src="https://www.effectivegatecpm.com/tvh7hvci4?key=fe0fb694d10be2c533f8b1b751077009" className="w-full h-full" />
                 </div>
                 <Progress value={progressValue} />
                 <p className="text-center font-mono text-lg">
@@ -98,13 +132,17 @@ export function OfferSection() {
               <AlertDialogHeader>
                 <AlertDialogTitle>Share to Unlock</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Share this offer with your friends on Messenger to unlock the next step.
+                  Share this offer to unlock the next step.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <div className="space-y-4 py-4">
-                <Button onClick={handleShareClick} className="w-full" size="lg">
+                <Button onClick={() => handleShareClick('messenger')} className="w-full" size="lg" disabled={shares.messenger}>
                   <MessageSquare className="mr-2" /> Share on Messenger
                 </Button>
+                 <Button onClick={() => handleShareClick('whatsapp')} className="w-full bg-green-500 hover:bg-green-600" size="lg" disabled={shares.whatsapp}>
+                  <WhatsAppIcon /> Share on WhatsApp
+                </Button>
+                <p className="text-center text-sm text-muted-foreground">{totalShares} of 2 shares completed</p>
               </div>
               <AlertDialogFooter>
                 <Button variant="outline" onClick={closeDialog}>Close</Button>
@@ -128,17 +166,17 @@ export function OfferSection() {
             </>
           )}
           {step === 'submitted' && (
-             <>
-             <AlertDialogHeader>
-               <AlertDialogTitle>Offer Claimed!</AlertDialogTitle>
-               <AlertDialogDescription>
-                 Your request has been submitted. You will receive your data within 24 hours.
-               </AlertDialogDescription>
-             </AlertDialogHeader>
-             <AlertDialogFooter>
+            <>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Offer Claimed!</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Your request has been submitted. You will receive your data within 24 hours.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
                 <Button onClick={closeDialog}>Close</Button>
-             </AlertDialogFooter>
-           </>
+              </AlertDialogFooter>
+            </>
           )}
         </AlertDialogContent>
       </AlertDialog>
