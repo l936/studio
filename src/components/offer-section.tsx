@@ -47,9 +47,23 @@ export function OfferSection() {
   };
 
   const handleShareClick = () => {
-    const urlToShare = window.location.href;
-    const messengerUrl = `https://www.facebook.com/dialog/send?app_id=123456789&link=${encodeURIComponent(urlToShare)}&redirect_uri=${encodeURIComponent(urlToShare)}`;
-    window.open(messengerUrl, '_blank');
+    const urlToShare = encodeURIComponent(window.location.href);
+    const textToShare = encodeURIComponent("Check out this amazing offer for free internet!");
+    
+    // Try to open Messenger app directly
+    const messengerAppUrl = `fb-messenger://share?link=${urlToShare}&app_id=123456789`;
+    
+    // Fallback to web URL
+    const webUrl = `https://www.facebook.com/dialog/share?app_id=123456789&href=${urlToShare}&quote=${textToShare}&display=popup&redirect_uri=${urlToShare}`;
+
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        window.location.href = messengerAppUrl;
+    } else {
+        window.open(webUrl, '_blank');
+    }
+
     setShareCount((prev) => prev + 1);
   };
   
